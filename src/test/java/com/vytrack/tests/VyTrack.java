@@ -5,6 +5,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -25,7 +27,7 @@ public class VyTrack {
     }
 
     @Test
-    public void login(){
+    public void login() throws InterruptedException {
         WebElement userName = driver.findElement(By.id("prependedInput"));
 
       userName.sendKeys("user38");
@@ -44,6 +46,41 @@ public class VyTrack {
 
       WebElement createEvent = driver.findElement(By.xpath("(//a[@href='/calendar/event/create'])[3]"));
         createEvent.sendKeys(Keys.ENTER);
+
+        Thread.sleep(30000);
+
+        WebElement selectBtn = driver.findElement(By.xpath("(//input[@type='checkbox'])[2]"));
+        selectBtn.click();
+
+        WebElement invalidInteger = driver.findElement(By.xpath("(//input[@class='recurrence-subview-control__number'])[1]"));
+        Thread.sleep(3000);
+        invalidInteger.clear();
+        Thread.sleep(3000);
+        invalidInteger.sendKeys("-2" + Keys.ENTER);
+
+        WebElement verifyErrorMessage = driver.findElement(By.xpath("(//span[.='The value have not to be less than 1.'])[3]"));
+
+        String expectedResult = "The value have not to be less than 1.";
+        String actualResult = verifyErrorMessage.getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+        Thread.sleep(3000);
+        invalidInteger.clear();
+        invalidInteger.sendKeys("134" + Keys.ENTER);
+
+        WebElement verifyErrorMessage2 = driver.findElement(By.xpath("(//span[.='The value have not to be more than 99.'])[3]"));
+
+        String expectedResult2 = "The value have not to be more than 99.";
+        String actualResult2 = verifyErrorMessage2.getText();
+
+        Assert.assertEquals(actualResult, expectedResult);
+
+
+
+
+
+
 
 
 
