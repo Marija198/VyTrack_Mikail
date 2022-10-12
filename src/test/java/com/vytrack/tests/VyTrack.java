@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -30,21 +31,21 @@ public class VyTrack {
     public void login() throws InterruptedException {
         WebElement userName = driver.findElement(By.id("prependedInput"));
 
-      userName.sendKeys("user38");
+        userName.sendKeys("user38");
 
-      WebElement password = driver.findElement(By.id("prependedInput2"));
-      password.sendKeys("UserUser123");
+        WebElement password = driver.findElement(By.id("prependedInput2"));
+        password.sendKeys("UserUser123");
 
-      WebElement logIn = driver.findElement(By.id("_submit"));
-      logIn.click();
+        WebElement logIn = driver.findElement(By.id("_submit"));
+        logIn.click();
 
-      WebElement activities = driver.findElement(By.xpath("(//span[@class='title title-level-1'])[3]"));
-      activities.click();
+        WebElement activities = driver.findElement(By.xpath("(//span[@class='title title-level-1'])[3]"));
+        activities.click();
 
-      WebElement calendar = driver.findElement(By.xpath("//span[.='Calendar Events']"));
-      calendar.click();
+        WebElement calendar = driver.findElement(By.xpath("//span[.='Calendar Events']"));
+        calendar.click();
 
-      WebElement createEvent = driver.findElement(By.xpath("(//a[@href='/calendar/event/create'])[3]"));
+        WebElement createEvent = driver.findElement(By.xpath("(//a[@href='/calendar/event/create'])[3]"));
         createEvent.sendKeys(Keys.ENTER);
 
         Thread.sleep(30000);
@@ -75,16 +76,10 @@ public class VyTrack {
         String actualResult2 = verifyErrorMessage2.getText();
 
         Assert.assertEquals(actualResult, expectedResult);
-
-
-
-
-
-
-
-
-
-
+    }
+    @AfterMethod
+        public void tearDownMethod() {
+            driver.quit();
 
     }
 }
